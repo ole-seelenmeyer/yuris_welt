@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yuris Welt — Serverhandbuch</title>
+<style>
+  :root {
+    --nacht: #171a19;
+    --stein: #23282a;
+    --moos: #6d8f3f;
+    --lehm: #b8763e;
+    --papier: #e8e4d9;
+    --gedaempft: #9aa39b;
+    --linie: #333a37;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--nacht);
+    color: var(--papier);
+    font-family: "Verdana", "DejaVu Sans", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .huelle {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* Kopf */
+  header {
+    padding: 72px 0 48px;
+    border-bottom: 3px solid var(--moos);
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    line-height: 1.05;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .untertitel {
+    color: var(--gedaempft);
+    margin: 0 0 40px;
+    max-width: 60ch;
+  }
+
+  .adressen {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .adresse {
+    background: var(--stein);
+    border-left: 6px solid var(--moos);
+    padding: 20px 22px;
+  }
+
+  .adresse:nth-child(2) { border-left-color: var(--lehm); }
+
+  .adresse h2 {
+    font-size: 0.95rem;
+    margin: 0 0 10px;
+    color: var(--gedaempft);
+    font-weight: normal;
+  }
+
+  .adresse code {
+    display: block;
+    font-size: 1.15rem;
+    word-break: break-all;
+    color: var(--papier);
+  }
+
+  .adresse p {
+    margin: 10px 0 0;
+    font-size: 0.85rem;
+    color: var(--gedaempft);
+  }
+
+  /* Navigation */
+  nav {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--linie);
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  nav a {
+    color: var(--papier);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+  }
+
+  nav a:hover, nav a:focus { border-bottom-color: var(--moos); }
+
+  /* Abschnitte */
+  section { padding: 56px 0 8px; border-bottom: 1px solid var(--linie); }
+
+  h2.titel {
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .wozu {
+    color: var(--gedaempft);
+    margin: 0 0 28px;
+    max-width: 70ch;
+  }
+
+  p, li { max-width: 70ch; }
+
+  h3 {
+    font-size: 1.05rem;
+    margin: 32px 0 8px;
+    color: var(--moos);
+  }
+
+  code {
+    font-family: "DejaVu Sans Mono", "Courier New", monospace;
+    background: var(--stein);
+    padding: 2px 6px;
+    color: #d7e3c4;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 8px;
+    font-size: 0.95rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 8px 12px 8px 0;
+    border-bottom: 2px solid var(--linie);
+    color: var(--gedaempft);
+    font-weight: normal;
+    font-size: 0.85rem;
+  }
+
+  td {
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--linie);
+    vertical-align: top;
+  }
+
+  td:first-child { white-space: nowrap; }
+  td code { background: none; padding: 0; }
+
+  .hinweis {
+    background: var(--stein);
+    border-left: 6px solid var(--lehm);
+    padding: 16px 20px;
+    margin: 28px 0;
+  }
+
+  .hinweis p { margin: 0; }
+  .hinweis p + p { margin-top: 10px; }
+
+  ol, ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+
+  a { color: var(--moos); }
+
+  footer {
+    padding: 48px 0 0;
+    color: var(--gedaempft);
+    font-size: 0.9rem;
+  }
+
+  .platzhalter {
+    background: var(--lehm);
+    color: var(--nacht);
+    padding: 1px 6px;
+  }
+</style>
+</head>
+<body>
+<div class="huelle">
+
+<header>
+  <h1>Yuris Welt</h1>
+  <p class="untertitel">Alles, was du zum Mitspielen brauchst: wie du reinkommst, was die Befehle machen, und wie du dein Zuhause vor anderen schützt.</p>
+
+  <div class="adressen">
+    <div class="adresse">
+      <h2>Java Edition (PC, Mac, Linux)</h2>
+      <code>185.207.164.136:19009</code>
+      <p>Mehrspieler → Server hinzufügen → Adresse eintragen.</p>
+    </div>
+    <div class="adresse">
+      <h2>Bedrock (iPad, Handy, Konsole)</h2>
+      <code>185.207.164.136<br>Port 19002</code>
+      <p>Spielen → Server → Server hinzufügen. Adresse und Port getrennt eintragen.</p>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#chat">Chat und Grundbefehle</a></li>
+    <li><a href="#zuhause">Zuhause und Teleport</a></li>
+    <li><a href="#schutz">Grundstück schützen</a></li>
+    <li><a href="#welten">Welten</a></li>
+    <li><a href="#slimefun">Slimefun</a></li>
+    <li><a href="#quests">Quests</a></li>
+    <li><a href="#kanone">Orbital Strike Cannon</a></li>
+    <li><a href="#reden">Miteinander reden</a></li>
+    <li><a href="#bedrock">Wenn du auf dem iPad spielst</a></li>
+  </ul>
+</nav>
+
+<section id="chat">
+  <h2 class="titel">Chat und Grundbefehle</h2>
+  <p class="wozu">Alles, was du tippst und was nicht mit einem Schrägstrich anfängt, sehen alle. Befehle beginnen immer mit <code>/</code>.</p>
+
+  <table>
+    <tr><th>Befehl</th><th>Was passiert</th></tr>
+    <tr><td><code>/help</code></td><td>Liste aller Befehle, die du benutzen darfst.</td></tr>
+    <tr><td><code>/list</code></td><td>Wer ist gerade online.</td></tr>
+    <tr><td><code>/msg Name Text</code></td><td>Nachricht nur an eine Person.</td></tr>
+    <tr><td><code>/r Text</code></td><td>Antwort auf die letzte private Nachricht.</td></tr>
+    <tr><td><code>/mail send Name Text</code></td><td>Nachricht an jemanden, der offline ist. Er bekommt sie beim nächsten Login.</td></tr>
+    <tr><td><code>/mail read</code></td><td>Deine Nachrichten lesen.</td></tr>
+    <tr><td><code>/info</code></td><td>Diese Anleitung im Spiel, in Kurzform.</td></tr>
+  </table>
+</section>
+
+<section id="zuhause">
+  <h2 class="titel">Zuhause und Teleport</h2>
+  <p class="wozu">Damit du nach jedem Tod nicht wieder quer über die Karte laufen musst.</p>
+
+  <table>
+    <tr><th>Befehl</th><th>Was passiert</th></tr>
+    <tr><td><code>/sethome</code></td><td>Merkt sich die Stelle, an der du stehst, als dein Zuhause.</td></tr>
+    <tr><td><code>/home</code></td><td>Bringt dich dorthin zurück.</td></tr>
+    <tr><td><code>/spawn</code></td><td>Zum Startpunkt der Welt.</td></tr>
+    <tr><td><code>/back</code></td><td>Zurück zu der Stelle, wo du zuletzt gestorben oder gerade weggeteleportiert bist.</td></tr>
+    <tr><td><code>/tpa Name</code></td><td>Fragt jemanden, ob du zu ihm kommen darfst.</td></tr>
+    <tr><td><code>/tpaccept</code></td><td>Ja sagen, wenn dich jemand gefragt hat.</td></tr>
+    <tr><td><code>/tpdeny</code></td><td>Nein sagen.</td></tr>
+    <tr><td><code>/warp</code></td><td>Zeigt öffentliche Orte, zu denen du springen kannst.</td></tr>
+  </table>
+</section>
+
+<section id="schutz">
+  <h2 class="titel">Grundstück schützen</h2>
+  <p class="wozu">Damit niemand aus Versehen — oder mit Absicht — dein Haus abbaut. Ohne Schutz darf jeder überall bauen und abreißen.</p>
+
+  <h3>So geht es</h3>
+  <ol>
+    <li>Nimm eine <strong>goldene Schaufel</strong> in die Hand.</li>
+    <li>Rechtsklick auf eine Ecke deines Grundstücks.</li>
+    <li>Rechtsklick auf die gegenüberliegende Ecke.</li>
+    <li>Fertig — der Bereich gehört jetzt dir und ist gesperrt.</li>
+  </ol>
+
+  <p>Deine Fläche wächst mit der Spielzeit. Je länger du spielst, desto größer darfst du absichern.</p>
+
+  <table>
+    <tr><th>Befehl</th><th>Was passiert</th></tr>
+    <tr><td><code>/trust Name</code></td><td>Diese Person darf auf deinem Grundstück bauen.</td></tr>
+    <tr><td><code>/containertrust Name</code></td><td>Darf nur an deine Truhen, nicht bauen.</td></tr>
+    <tr><td><code>/accesstrust Name</code></td><td>Darf nur Türen und Knöpfe benutzen.</td></tr>
+    <tr><td><code>/untrust Name</code></td><td>Nimmt die Erlaubnis wieder weg.</td></tr>
+    <tr><td><code>/claimslist</code></td><td>Zeigt alle deine Grundstücke.</td></tr>
+    <tr><td><code>/abandonclaim</code></td><td>Gibt das Grundstück, auf dem du stehst, wieder frei.</td></tr>
+  </table>
+
+  <div class="hinweis">
+    <p>Truhen, Öfen und Türen sind auf einem Grundstück automatisch geschützt. Du musst dafür nichts extra einstellen.</p>
+  </div>
+</section>
+
+<section id="welten">
+  <h2 class="titel">Welten</h2>
+  <p class="wozu">Auf dem Server liegen mehrere Welten nebeneinander. Jede hat ihr eigenes Inventar — was du in einer Welt dabeihast, ist in der anderen nicht in deinen Taschen.</p>
+
+  <table>
+    <tr><th>Befehl</th><th>Was passiert</th></tr>
+    <tr><td><code>/mv list</code></td><td>Zeigt alle Welten.</td></tr>
+    <tr><td><code>/mvtp Weltname</code></td><td>Bringt dich in eine andere Welt.</td></tr>
+  </table>
+
+  <p>Manche Welten sind auch über gebaute Portale erreichbar. Wenn du durch eins läufst, landest du automatisch drüben.</p>
+</section>
+
+<section id="slimefun">
+  <h2 class="titel">Slimefun</h2>
+  <p class="wozu">Über 500 zusätzliche Gegenstände: Maschinen, Stromnetze, Werkzeuge, Jetpacks. Alles wird aus normalen Minecraft-Rohstoffen gebaut, du brauchst nichts zu installieren.</p>
+
+  <h3>Anfangen</h3>
+  <p>Tipp <code>/sf guide</code> — du bekommst das Slimefun-Handbuch ins Inventar. Rechtsklick öffnet es. Darin sind alle Gegenstände mit ihren Rezepten aufgelistet.</p>
+
+  <p>Der erste Schritt ist fast immer der <strong>Enhanced Crafting Table</strong>. Den baust du an einer normalen Werkbank, und danach entstehen dort die eigentlichen Slimefun-Sachen.</p>
+
+  <div class="hinweis">
+    <p>Wenn im Handbuch ein Rezept grau ist, fehlt dir noch die Forschung dazu. Die schaltet sich frei, sobald du die nötigen Zutaten zusammen hast.</p>
+  </div>
+</section>
+
+<section id="quests">
+  <h2 class="titel">Quests</h2>
+  <p class="wozu">Kleine Aufträge mit Belohnung.</p>
+
+  <table>
+    <tr><th>Befehl</th><th>Was passiert</th></tr>
+    <tr><td><code>/quests</code></td><td>Öffnet das Quest-Menü.</td></tr>
+    <tr><td><code>/quests list</code></td><td>Zeigt, was gerade zu holen ist.</td></tr>
+    <tr><td><code>/quests journal</code></td><td>Dein Auftragsbuch mit dem aktuellen Stand.</td></tr>
+  </table>
+</section>
+
+<section id="kanone">
+  <h2 class="titel">Orbital Strike Cannon</h2>
+  <p class="wozu">Angelruten, die aus dem Himmel TNT auf die Stelle regnen lassen, auf die du wirfst. Sehr laut, sehr endgültig.</p>
+
+  <p>Es gibt drei Sorten — <strong>NUKE</strong>, <strong>STAB</strong> und <strong>CINEMATIC NUKE</strong> — jeweils in drei Stärken. Baust du Redstone mit ins Rezept, zielt die Rute genauer.</p>
+
+  <p>Die Ruten werden an der normalen Werkbank hergestellt. Wer die Rezepte nicht suchen will, kann sich eine geben lassen:</p>
+
+  <table>
+    <tr><th>Befehl</th><th>Was du bekommst</th></tr>
+    <tr><td><code>/function orbital:give/nuke_1</code></td><td>NUKE, Stärke 1</td></tr>
+    <tr><td><code>/function orbital:give/nuke_3</code></td><td>NUKE, Stärke 3</td></tr>
+    <tr><td><code>/function orbital:give/stab_1</code></td><td>STAB, Stärke 1</td></tr>
+    <tr><td><code>/function orbital:give/stab_aim_1</code></td><td>STAB mit Zielhilfe</td></tr>
+    <tr><td><code>/function orbital:give/cinematic_nuke</code></td><td>Cinematic NUKE</td></tr>
+  </table>
+
+  <div class="hinweis">
+    <p>Nicht auf gebauten Sachen ausprobieren. Ein Grundstücksschutz hält TNT zwar auf, aber alles außerhalb ist danach ein Krater.</p>
+  </div>
+</section>
+
+<section id="reden">
+  <h2 class="titel">Miteinander reden</h2>
+  <p class="wozu">Der Sprachchat läuft neben Minecraft im Browser. Kein Konto, keine Installation.</p>
+
+  <p>Die Adresse steht im Spiel: tipp <code>/info reden</code>. Sie steht bewusst nicht auf dieser Seite, damit niemand Fremdes im Sprachkanal landet.</p>
+
+  <p>Link im Browser öffnen, Namen eintippen, Mikrofon erlauben. Fenster offen lassen, solange ihr spielt. Auf dem iPad läuft es in Safari neben Minecraft weiter.</p>
+</section>
+
+<section id="bedrock">
+  <h2 class="titel">Wenn du auf dem iPad spielst</h2>
+  <p class="wozu">Der Server ist eigentlich ein Java-Server. Dass Bedrock-Geräte mitspielen können, macht eine Übersetzungsschicht namens Geyser möglich. Das klappt gut, hat aber zwei Eigenheiten.</p>
+
+  <h3>Nach einem Minecraft-Update kommst du vielleicht nicht rein</h3>
+  <p>Steht beim Verbinden etwas von „Outdated Geyser proxy“, ist dein iPad neuer als der Server. Das löst sich meistens von selbst innerhalb weniger Tage. Sag Bescheid, dann wird nachgezogen.</p>
+
+  <h3>Manche Gegenstände sehen komisch aus</h3>
+  <p>Slimefun-Maschinen erscheinen auf Bedrock teilweise als Spielerköpfe oder Platzhalter. Sie funktionieren trotzdem ganz normal — anklicken, Menü geht auf, alles wie bei den anderen.</p>
+
+  <div class="hinweis">
+    <p>Schalte für Minecraft die automatischen App-Updates aus. Sonst springt dein iPad bei jedem neuen Minecraft vor den Server und du kommst erstmal nicht mehr rein.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Fragen, die hier nicht beantwortet sind: im Chat fragen oder im Sprachchat melden.</p>
+</footer>
+
+</div>
+</body>
+</html>
